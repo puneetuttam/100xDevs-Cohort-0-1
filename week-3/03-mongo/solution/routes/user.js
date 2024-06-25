@@ -33,13 +33,19 @@ router.post('/courses/:courseId', userMiddleware, async(req, res) => {
     const courseId = req.params.courseId;
     const username = req.headers.username;
 
-    await User.updateOne({
-        username: username
-    }, {
-        "$push": {
-            purchasedCourses: courseId
-        }
-    })
+    try {
+        await User.updateOne({
+            username: username
+        }, {
+            "$push": {
+                purchasedCourses: courseId
+            }
+        })
+        
+    } catch (error) {
+        console.log(error)
+        
+    }
     res.json({
         message: "Purchase complete!"
     })
@@ -50,8 +56,6 @@ router.get('/purchasedCourses', userMiddleware, async (req, res) => {
     const user = await User.findOne({
         username: req.headers.username
     });
-
-    console.log(user.purchasedCourses);
     const courses = await Course.find({
         _id: {
             "$in": user.purchasedCourses
