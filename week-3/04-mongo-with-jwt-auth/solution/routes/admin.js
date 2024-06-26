@@ -26,8 +26,6 @@ router.post('/signin', async (req, res) => {
     // Implement admin signup logic
     const username = req.body.username;
     const password = req.body.password;
-    console.log(JWT_SECRET);
-
     const user = await User.find({
         username,
         password

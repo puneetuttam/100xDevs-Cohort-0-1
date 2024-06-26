@@ -1,29 +1,31 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('mongodb url');
+mongoose.connect('mongodb+srv://Hiccup:Puneet%40123@lerningmongodb.smlud5k.mongodb.net/course_selling_app3');
 
 // Define schemas
 const AdminSchema = new mongoose.Schema({
     // Schema definition here
-    username:String,
-    pasword:String
-    
+    username: String,
+    password: String
 });
 
 const UserSchema = new mongoose.Schema({
     // Schema definition here
-    username:String,
-    password:String
+    username: String,
+    password: String,
+    purchasedCourses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    }]
 });
 
 const CourseSchema = new mongoose.Schema({
     // Schema definition here
-    title:String,
-    description:String,
-    price:String,
-    imageLink:String
-
+    title: String,
+    description: String,
+    imageLink: String,
+    price: Number
 });
 
 const Admin = mongoose.model('Admin', AdminSchema);
